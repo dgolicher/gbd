@@ -1,0 +1,72 @@
+---
+title: "How to use the model"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Ecological models
+
+Application of an ecological model to a real world problem is challenging. It is tempting to believe that a model can be used to make predictions regarding system behaviour. If by prediction we meam predicting system behaviour in a broadly qualitative manner this may be possible. Localised outbreaks of a pathogen affecting a population of susceptible individuals almost always follow the dynamic predicted by a simple SIR model.
+However making quantitative predictions from a model is different. Making quantitative predictions require knowledge of the likely values of the parameters. To prioritise our search for knoowledge of the values for these parameters we first conduct sensitivity analysis in order to determine how model behaiour depends on the parameters. There is little to be gained by proposing an expensive long term study to ascertain the value of a parameter used in a model if it can be shown from the outset that model behviour is not sensitive to the parameter. 
+Many ecological models produce rather complex dynamics which are sensitive to combinations of parameters which interact with each other.
+
+So conducting model sensitivity analysis is challenging. There are different formal protocols that can be used. These can involve keeping some parameters fixed while changing others according to some pattern. Another approach is known as Monte Carlo analysis. This involves drawing all parameters independently and at random from distributions and combining them. 
+
+The problem even with a full monte carlo analysis is that you are still left with the task of trying to understand why some combinations of parameters led to the behviour that they produced.
+
+Another approach is to "play with the model". This sounds as if it is involves playing a game. However playing with a model that involves mortality as a key outcome is not a game. It is one way of understanding complex system behaviour in an intuitive manner.
+
+The best way to define a models usefulness is to ask whether we know more through using the model than we would if we did not. When thinking about the consequences of COvid on a population is is tempting to carry out "back of the envelope" or mental arithmetic when provided with estimates of incidenc fatality rates and R numbers. It is much better to plug them into a formal model. The output from the model should not be regarded as prediction. It is simply the consequences of making formal assumptions explicit.
+
+## Population tab
+
+Let's assume that we can subdivide the population of susceptible individuals into two strata. We call them vulnerable and less vulnerable classes and assign each a different incidence fatality rate. This is clearly a gross simplification. In reality there is a continnum of vulnerability. However model criticism can be conducted later. We'll set the population of vulnerables to 2 million, which is a rough approximation in the UK. The population of less vulnerable excludes children under 18 as deaths in this age group are negigible. The IFRs have been guestimated to start the simulation from Ionnidis paper placed online on 7 October. Sliders allow major changes to be made at will
+
+## Phase one tab
+
+Now we run two parallel SIR models, one for each strata. Each model has its own R_0 which is derived as combination of the transmission parameter, beta and the days infectious parameter, gamma. We also add an R_0 that can be though of as representing the number of susceptible vulnerable people that are infected by an infected less vulnerable person. 
+
+
+## Sensitivity
+
+Let's first look at the sensitivity to transmissions within the least vulnerable group. Suprisingly, at high transmission rates, if we are using the total number of deaths as an outcome measure the model is not very sensistive to this parameter at all. Until, that is the parameter falls to the level that the outbreak is being supressed.
+
+# Less vulnerable strata
+
+$\frac {dS_1}{dt} = - \beta_1 \frac{S_1I_1}{N_2}$   
+$\frac {dI_1}{dt} =  \beta_1 \frac{S_1I_1}{N_1}- \gamma \frac{I_1}{N_1}$  
+$\frac {dR_1}{dt} =  \gamma \frac{I_1}{N_1}$  
+
+## Vulnerable strata
+
+$\frac {dI_2}{dt} =  \beta_2 \frac{S_2I_2}{N}  + \beta_{12} \frac{S_2I_1}{N_2} - \gamma \frac{I_2}{N_2}$  
+$\frac {dS_2}{dt} = - \beta_2 \frac{S_2I_1}{N_2} - \beta_{12} \frac{S_2I_1}{N_2}$    
+$\frac {dR_2}{dt} =  \gamma \frac{I_2}{N_1}$  
+
+Mortality is then simply calculated by mutiplying the final number of removed vulnerables by the IFR (note the same simple calculation can be used for mortality of the less vulnerable is needed)
+
+$IFR_{nv} R_1N_1$
+
+$IFR_{v} R_2N_2$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

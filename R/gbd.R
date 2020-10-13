@@ -43,8 +43,6 @@ days1 = 100,
 R01 = 2.5,
 R02 =1,
 R012 =1,
-ifr = 0.001,
-pop =40,
 R11 =2.5,
 R12 = 1,
 R112 = 1,
@@ -52,16 +50,16 @@ days2 = 100
 )
 {
 
+beta2<- R02*gamma
+beta1 <- R01*gamma
+beta12 <- R012*gamma
+
+sd<-run_gbd(beta1 = beta1,beta2=beta2, beta12=beta12,gamma=gamma,days=days1)
+
 beta2<- R12*gamma
 beta1 <- R11*gamma
 beta12 <- R112*gamma
 
-sd<-run_gbd(beta1 = beta1,beta2=beta2, beta12=beta12,gamma=gamma, days=days1)
-
-
-beta2<- R02*gamma
-beta1 <- R01*gamma
-beta12 <- R012*gamma
 n<-length(sd$S1)
 sd2<-run_gbd(
   S1=sd$S1[n],I1=sd$I1[n], R1=sd$R1[n],
